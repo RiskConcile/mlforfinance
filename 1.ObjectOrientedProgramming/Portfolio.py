@@ -13,7 +13,7 @@ class Portfolio:
         
         Example:
         initial_cash = 100000
-        __positions = {"Apple":   {"Share price": 150.0, "Number": 1000},
+        positions = {"Apple":   {"Share price": 150.0, "Number": 1000},
                        "Verizon": {"Share price": 52.4, "Number": 3000}}
         """
         # Attributes
@@ -25,25 +25,25 @@ class Portfolio:
     def __str__(self):
         return "A portfolio consisting of {number} positions and " \
             + "a total value of {value:,} USD.".format(
-                number=len(self.__positions), 
+                number=len(self.positions), 
                 value=round(self.get_total_value(), 2)
                 )
     
     
     #def __len__(self):
-    #    return len(self.__positions)
+    #    return len(self.positions)
     
     
     #def __add__(self, portfolio_2):
     #    initial_cash = self.cash + portfolio_2.cash
-    #    for company, position in portfolio_2.__positions.items():
-    #        if company in self.__positions:
+    #    for company, position in portfolio_2.positions.items():
+    #        if company in self.positions:
     #            self.make_transaction(company, position['Number'])
     #        else:
     #            self.make_transaction(company, position['Number'], 
     #               position['Share price'])
-    #    __positions = self.__positions
-    #    return Portfolio(initial_cash, __positions)
+    #    positions = self.positions
+    #    return Portfolio(initial_cash, positions)
     
     
     #def __ge__(self, portfolio_2):
@@ -52,14 +52,14 @@ class Portfolio:
     
     #def __iter__(self):
     #    self.n = 0
-    #    self.companies = list(self.__positions)
+    #    self.companies = list(self.positions)
     #    return self
     
     
     #def __next__(self):
     #    if self.n <= len(self.companies) - 1:
     #        company = self.companies[self.n]
-    #        result = self.__positions[company]
+    #        result = self.positions[company]
     #        self.n += 1
     #        return company, result
     #    else:
@@ -72,7 +72,7 @@ class Portfolio:
     #def value(self):
     #    return sum([position['Share price']*position['Number'] 
     #                          for _, position 
-    #                          in self.__positions.items()]) \
+    #                          in self.positions.items()]) \
     #            + self.cash
     
     #@property
@@ -89,7 +89,7 @@ class Portfolio:
                 recursively, inserts copies into it of the objects found
                 in the original.
         """
-    #    return copy.deepcopy(self.__positions)
+    #    return copy.deepcopy(self.positions)
 
     
     #####
@@ -123,12 +123,12 @@ class Portfolio:
     
     
     #def update_price(self, company, new_price):
-    #    self.__positions[company]['Share price'] = new_price
+    #    self.positions[company]['Share price'] = new_price
     #    return 'SUCCESS'
     
     
     #def update_positions(self, positions):
-    #    self.__positions = positions
+    #    self.positions = positions
     #    self.cash = self.__initial_cash
     #    for _, position in positions.items():
     #        self.cash -= position['Share price']*position['Number']
@@ -139,12 +139,12 @@ class Portfolio:
             assert price is not None, \
                 'Company not yet known, please provide share price.'
             assert self.cash - price*number >= 0, "Not enough cash, please increase cash position"
-            self.__positions[company] = {'Share price': price, 
+            self.positions[company] = {'Share price': price, 
                                          "Number": number}
             self.cash = self.cash - price*number
         else:
             assert price is None, \
                 "When making a transaction on a company in the portfolio, you should update " + \
                 "the price using the update_price method first instead of specifying the price here."
-            self.__positions[company]['Number'] += number
+            self.positions[company]['Number'] += number
             self.cash -= number*self.positions[company]["Share price"]
